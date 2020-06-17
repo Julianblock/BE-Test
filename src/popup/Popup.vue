@@ -1,27 +1,47 @@
 <template>
-  <div class="home">
+<div>
+  <div class="home" v-if="!loggedIn">
     <div style="display: flex;align-items: center;margin-bottom: 50px;width: 80%;justify-content: center;"><img alt="Focust Logo" src="@/assets/logo.png" class="home-img">
     <h1 style="font-family: unset;color: #767676;">Focust</h1>
     </div>
     <input type="email" placeholder="Email:" class="home__input">
     <input type="password" placeholder="Password:" class="home__input">
-    <button class="home__btn-submit">Submit</button>
-    
+    <button class="home__btn-submit" @click="logIn">Submit</button>
+  </div>
+  <div v-else-if="loggedIn">
+    <Menu />
+  </div>
 </div>
-
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
 import { mapState } from 'vuex';
+import Menu from './Menu/Menu.vue'
+
 export default {
-  name: 'App',
-  components: { HelloWorld },
+  name: 'Popup',
+  components: {
+    Menu,
+  },
+  computed: {
+    ...mapState(['loggedIn']),
+  },
+  methods: {
+    logIn() {
+      this.$store.commit('set', {
+         loggedIn: true,
+      });
+    }
+  },
 }
 </script>
 
 <style>
+body {
+    font-family: 'Nunito',sans-serif;
+}
   .home {
+    font-family: 'Nunito',sans-serif;
     background: white;
     border-radius: 15px;
     padding: 15px;
